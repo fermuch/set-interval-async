@@ -1,15 +1,8 @@
 import { SetIntervalAsyncStrategy } from "./set-interval-async-strategy.cjs";
 import { SetIntervalAsyncHandler } from "./set-interval-async-handler.cjs";
+import Timer from 'react-native-background-timer-android';
 
-declare type NativeTimeout = unknown;
-
-declare function setTimeout(
-  handler: (...args: unknown[]) => void,
-  delayMs: number,
-  ...args: unknown[]
-): NativeTimeout;
-
-declare function clearTimeout(timeout: NativeTimeout): void;
+declare type NativeTimeout = number;
 
 const MIN_INTERVAL_MS = 10;
 const MAX_INTERVAL_MS = 2147483647;
@@ -45,7 +38,7 @@ export class SetIntervalAsyncTimer<HandlerArgs extends unknown[]> {
   ): Promise<void> {
     timer.#stopped = true;
     if (timer.#timeout) {
-      clearTimeout(timer.#timeout);
+      Timer.clearTimeout(timer.#timeout);
     }
     if (timer.#promise) {
       await timer.#promise;
@@ -59,7 +52,7 @@ export class SetIntervalAsyncTimer<HandlerArgs extends unknown[]> {
     delayMs: number,
     ...handlerArgs: HandlerArgs
   ): void {
-    this.#timeout = setTimeout(async () => {
+    this.#timeout = Timer.setTimeout(async () => {
       this.#timeout = undefined;
       this.#promise = this.#runHandlerAndScheduleTimeout(
         strategy,

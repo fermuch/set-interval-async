@@ -1,7 +1,7 @@
 {
-  "name": "set-interval-async",
+  "name": "@fermuch/set-interval-async",
   "version": "3.0.3",
-  "description": "Modern version of setInterval for promises and async functions available in Node.js and browsers.",
+  "description": "Modern version of setInterval for promises and async functions available in Node.js and browsers. -- Forked to use react-native-background-timer-android",
   "repository": {
     "type": "git",
     "url": "https://github.com/ealmansi/set-interval-async.git"
@@ -93,5 +93,8 @@
     "typescript": "^4.7.4",
     "webpack": "^5.74.0",
     "webpack-cli": "^4.10.0"
+  },
+  "dependencies": {
+    "react-native-background-timer-android": "^1.0.4"
   }
 }
